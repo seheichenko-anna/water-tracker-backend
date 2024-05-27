@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import { handleSaveError, setUpdateSetting } from "./hooks.js";
+import moment from "moment";
 
 const waterSchema = new Schema(
   {
@@ -8,16 +9,19 @@ const waterSchema = new Schema(
       required: true,
       max: 5000,
     },
-    date: {
+    consumedAt: {
       type: Date,
       required: true,
+      default: function () {
+        return moment().toDate();
+      },
     },
     owner: {
       type: Schema.Types.ObjectId,
       ref: "user",
     },
   },
-  { versionKey: false, timestamps: true }
+  { versionKey: false }
 );
 
 waterSchema.pre("findOneAndUpdate", setUpdateSetting);

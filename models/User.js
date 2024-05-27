@@ -33,7 +33,7 @@ const userSchema = new Schema(
       type: String,
     },
   },
-  { versionKey: false, timestamps: true }
+  { versionKey: false }
 );
 
 userSchema.pre("findOneAndUpdate", setUpdateSetting);
