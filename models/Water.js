@@ -9,11 +9,15 @@ const waterSchema = new Schema(
       required: true,
       max: 5000,
     },
-    consumedAt: {
+    time: {
+      type: String,
+      required: true,
+    },
+    date: {
       type: Date,
       required: true,
       default: function () {
-        return moment().toDate();
+        return moment().format("YYYY-MM-DD");
       },
     },
     owner: {
