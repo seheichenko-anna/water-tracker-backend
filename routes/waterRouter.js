@@ -7,8 +7,10 @@ import {
 import waterControllers from "../controllers/waterControllers.js";
 import validateBody from "../decorators/validateBody.js";
 import isValidId from "../middlewares/isValidId.js";
+import authenticate from "../middlewares/authenticate.js";
 
 const waterRouter = express.Router();
+waterRouter.use(authenticate);
 
 waterRouter.post(
   "/",

@@ -1,23 +1,29 @@
 import * as waterService from "../services/waterServices.js";
-// import * as userService from "../services/userServices.js";
+import * as userService from "../services/userServices.js";
 import HttpError from "../helpers/HttpError.js";
 import ctrlWrapper from "../decorators/ctrlWrapper.js";
-import moment from "moment";
+import getTotalWaterForToday from "../helpers/getTotalWaterForToday.js";
 
 const createConsumedWater = async (req, res) => {
-  // const { _id: owner } = req.user;
+  const { _id: owner } = req.user;
+  const { amount } = req.body;
 
-  // const result = await waterService.addWater({ req.body, owner });
+  const { totalAmount } = await getTotalWaterForToday(owner);
 
-  const result = await waterService.addWater(req.body);
+  if (totalAmount + amount > 5000) {
+    throw HttpError(400, "Total water amount cannot exceed 5000 ml per day");
+  }
+
+  const result = await waterService.addWater({ ...req.body, owner });
+
   res.status(201).json(result);
 };
 
 const deleteConsumedWater = async (req, res) => {
   const { id: _id } = req.params;
-  // const { _id: owner } = req.user;
-  // const result = await contactsService.removeWater({ owner, _id });
-  const result = await waterService.removeWater({ _id });
+  const { _id: owner } = req.user;
+  const result = await contactsService.removeWater({ owner, _id });
+
   if (!result) {
     throw HttpError(404);
   }
@@ -26,10 +32,9 @@ const deleteConsumedWater = async (req, res) => {
 
 const updateConsumedWater = async (req, res) => {
   const { id: _id } = req.params;
-  // const { _id: owner } = req.user;
-  // const result = await contactsService.updateWater({ owner, _id }, req.body);
+  const { _id: owner } = req.user;
+  const result = await contactsService.updateWater({ owner, _id }, req.body);
 
-  const result = await waterService.updateWater({ _id }, req.body);
   if (!result) {
     throw HttpError(404);
   }
@@ -37,35 +42,22 @@ const updateConsumedWater = async (req, res) => {
 };
 
 const getWaterConsumptionForToday = async (req, res) => {
-  const today = moment()
-    .startOf("day")
-    .format(
-      "ddd MMM DD YYYY 00:00:00 [GMT]ZZ [(Eastern European Summer Time)]"
-    );
-  const tomorrow = moment()
-    .endOf("day")
-    .format(
-      "ddd MMM DD YYYY 23:59:59 [GMT]ZZ [(Eastern European Summer Time)]"
-    );
-  // const { _id: owner } = req.user;
-  //  const user = await userServices.findUser(owner);
-  //  if (!user) {
-  //     throw HttpError(404, "User not found");
-  //  }
+  const { _id: owner } = req.user;
 
-  const filter = { date: { $gte: today, $lt: tomorrow } };
-  const setting = { sort: { date: "asc" } };
+  const user = await userService.findUser(owner);
+  if (!user) {
+    throw HttpError(404, "User not found");
+  }
 
-  const result = await waterService.getWaterPerDay({ filter, setting });
+  const { totalAmount, result } = await getTotalWaterForToday(owner);
 
-  const totalAmount = result.reduce((acc, curr) => acc + curr.amount, 0);
-  //  const dailyNorm = user.waterRate * 1000;
-  const dailyNorm = 1.5 * 1000;
-  const percent = (totalAmount / dailyNorm) * 100;
+  const dailyNorm = user.waterRate * 1000;
+
+  const percent = Math.round((totalAmount / dailyNorm) * 100);
 
   res.json({
-    percent: `${percent.toFixed(2)}%`,
-    entries: result,
+    percent,
+    result,
   });
 };
 
