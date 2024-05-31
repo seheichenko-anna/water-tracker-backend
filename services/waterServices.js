@@ -6,3 +6,6 @@ export const removeWater = async (filter) => Water.findOneAndDelete(filter);
 
 export const updateWater = (filter, data) =>
   Water.findOneAndUpdate(filter, data);
+
+export const getWaterPerDay = ({ filter = {}, fields, setting = {} }) =>
+  Water.find(filter, fields, setting);

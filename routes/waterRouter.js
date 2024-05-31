@@ -27,4 +27,6 @@ waterRouter.put(
 
 waterRouter.delete("/:id", isValidId, waterControllers.deleteConsumedWater);
 
+waterRouter.get("/today", waterControllers.getWaterConsumptionForToday);
+
 export default waterRouter;

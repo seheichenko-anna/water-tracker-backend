@@ -1,6 +1,5 @@
 import { Schema, model } from "mongoose";
 import { handleSaveError, setUpdateSetting } from "./hooks.js";
-import moment from "moment";
 
 const waterSchema = new Schema(
   {
@@ -9,16 +8,9 @@ const waterSchema = new Schema(
       required: true,
       max: 5000,
     },
-    time: {
+    date: {
       type: String,
       required: true,
-    },
-    date: {
-      type: Date,
-      required: true,
-      default: function () {
-        return moment().format("YYYY-MM-DD");
-      },
     },
     owner: {
       type: Schema.Types.ObjectId,
