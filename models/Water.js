@@ -9,7 +9,7 @@ const waterSchema = new Schema(
       max: 5000,
     },
     date: {
-      type: Date,
+      type: String,
       required: true,
     },
     owner: {
@@ -17,7 +17,7 @@ const waterSchema = new Schema(
       ref: "user",
     },
   },
-  { versionKey: false, timestamps: true }
+  { versionKey: false }
 );
 
 waterSchema.pre("findOneAndUpdate", setUpdateSetting);
