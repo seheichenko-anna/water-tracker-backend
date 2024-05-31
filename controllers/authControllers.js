@@ -45,9 +45,9 @@ const signin = async (req, res) => {
   const payload = { id };
 
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
-  const result = await authServices.updateUser({ _id: id }, { token });
+  await authServices.updateUser({ _id: id }, { token });
 
-  res.json(result);
+  res.json(user);
 };
 
 const signout = async (req, res) => {
