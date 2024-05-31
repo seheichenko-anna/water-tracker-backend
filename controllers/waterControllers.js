@@ -22,7 +22,7 @@ const createConsumedWater = async (req, res) => {
 const deleteConsumedWater = async (req, res) => {
   const { id: _id } = req.params;
   const { _id: owner } = req.user;
-  const result = await contactsService.removeWater({ owner, _id });
+  const result = await waterService.removeWater({ owner, _id });
 
   if (!result) {
     throw HttpError(404);
@@ -33,7 +33,7 @@ const deleteConsumedWater = async (req, res) => {
 const updateConsumedWater = async (req, res) => {
   const { id: _id } = req.params;
   const { _id: owner } = req.user;
-  const result = await contactsService.updateWater({ owner, _id }, req.body);
+  const result = await waterService.updateWater({ owner, _id }, req.body);
 
   if (!result) {
     throw HttpError(404);
