@@ -22,10 +22,7 @@ const signup = async (req, res) => {
     avatarURL,
   });
 
-  res.status(201).json({
-    username: newUser.username,
-    email: newUser.email,
-  });
+  res.status(201).json(newUser);
 };
 
 const signin = async (req, res) => {
