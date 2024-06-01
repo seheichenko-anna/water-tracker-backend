@@ -19,7 +19,7 @@ waterRouter.post(
   waterControllers.createConsumedWater
 );
 
-waterRouter.put(
+waterRouter.patch(
   "/:id",
   isValidId,
   isEmptyBody,
