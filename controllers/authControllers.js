@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import gravatar from "gravatar";
 
 import * as authServices from "../services/authServices.js";
+import * as userServices from "../services/userServices.js";
 
 import ctrlWrapper from "../decorators/ctrlWrapper.js";
 
@@ -12,7 +13,7 @@ const { JWT_SECRET } = process.env;
 const signup = async (req, res) => {
   const { email } = req.body;
   const avatarURL = gravatar.url(email);
-  const user = await authServices.findUser({ email });
+  const user = await userServices.findUser({ email });
   if (user) {
     throw HttpError(409, "Email in use");
   }
@@ -27,7 +28,7 @@ const signup = async (req, res) => {
 
 const signin = async (req, res) => {
   const { email, password } = req.body;
-  const user = await authServices.findUser({ email });
+  const user = await userServices.findUser({ email });
   if (!user) {
     throw HttpError(409, "Email in use");
   }
@@ -45,9 +46,9 @@ const signin = async (req, res) => {
   const payload = { id };
 
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
-  await authServices.updateUser({ _id: id }, { token });
+  const result = await userServices.updateUser({ _id: id }, { token });
 
-  res.json(user);
+  res.json(result);
 };
 
 const signout = async (req, res) => {

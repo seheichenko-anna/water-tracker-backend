@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import HttpError from "../helpers/HttpError.js";
-import { findUser } from "../services/authServices.js";
+import { findUser } from "../services/userServices.js";
 const { JWT_SECRET } = process.env;
 
 const authenticate = async (req, res, next) => {
