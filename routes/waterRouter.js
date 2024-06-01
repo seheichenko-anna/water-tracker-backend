@@ -30,5 +30,6 @@ waterRouter.patch(
 waterRouter.delete("/:id", isValidId, waterControllers.deleteConsumedWater);
 
 waterRouter.get("/today", waterControllers.getWaterConsumptionForToday);
+waterRouter.get("/:month", waterControllers.getWaterConsumptionPerMonth);
 
 export default waterRouter;
