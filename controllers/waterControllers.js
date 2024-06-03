@@ -64,7 +64,7 @@ const getWaterConsumptionForToday = async (req, res) => {
 
 const getWaterConsumptionPerMonth = async (req, res) => {
   const { _id: owner } = req.user;
-  const { month } = req.params;
+  const { month, year } = req.params;
 
   const user = await userService.findUser(owner);
   if (!user) {
@@ -92,7 +92,7 @@ const getWaterConsumptionPerMonth = async (req, res) => {
     filter: {
       owner,
       date: {
-        $regex: new RegExp(`${monthAbbreviation}`),
+        $regex: new RegExp(`^\\w{3} ${monthAbbreviation} \\d{2} ${year}`),
       },
     },
   });
