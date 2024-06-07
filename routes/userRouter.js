@@ -6,6 +6,9 @@ import validateBody from "../decorators/validateBody.js";
 import authenticate from "../middlewares/authenticate.js";
 import upload from "../middlewares/upload.js";
 import { userUpdateSchema } from "../schemas/authSchemas.js";
+import { userWaterRateSchema } from "../schemas/authSchemas.js";
+import waterRateControlles from "../controllers/userControllers.js";
+
 
 const userRouter = express.Router();
 
@@ -26,4 +29,19 @@ userRouter.patch(
   userControllers.updateAvatar
 );
 
-export default userRouter;
+
+const waterRateRouter = express.Router();
+
+waterRateRouter.use(authenticate);
+
+waterRateRouter.patch(
+  "/",
+  isEmptyBody,
+  validateBody(userWaterRateSchema),
+  waterRateControlles.updateWaterRate
+);
+
+export default {
+  userRouter,
+  waterRateRouter
+};

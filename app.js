@@ -9,7 +9,7 @@ import swaggerDocument from "./swagger.json" assert { type: "json" };
 import waterRouter from "./routes/waterRouter.js";
 import userRouter from "./routes/userRouter.js";
 import authRouter from "./routes/authRouter.js";
-import waterRateRouter from "./routes/waterRate-router.js";
+import waterRateRouter from "./routes/userRouter.js";
 
 const { DB_HOST, PORT = 3000 } = process.env;
 

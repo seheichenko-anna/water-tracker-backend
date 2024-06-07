@@ -7,6 +7,8 @@ import ctrlWrapper from "../decorators/ctrlWrapper.js";
 import HttpError from "../helpers/HttpError.js";
 import resizeIMG from "../helpers/resizeIMJ.js";
 
+import User from "../models/User.js";
+
 const avatarsPath = path.resolve("public", "avatars");
 
 const getCurrent = async (req, res) => {
@@ -42,8 +44,20 @@ const updateAvatar = async (req, res) => {
   res.json({ avatarURL });
 };
 
+const updateWaterRate = async (req, res) => {
+  const { waterRate } = req.body;
+  const { _id } = req.user;
+
+  const updatedWaterRate = await User.findByIdAndUpdate(_id, {
+    waterRate: waterRate,
+  });
+
+  res.status(201).json({ waterRate: updatedWaterRate.waterRate });
+};
+
 export default {
   getCurrent: ctrlWrapper(getCurrent),
   updateUser: ctrlWrapper(updateUser),
   updateAvatar: ctrlWrapper(updateAvatar),
+  updateWaterRate: ctrlWrapper(updateWaterRate)
 };
