@@ -22,3 +22,7 @@ export const userUpdateSchema = Joi.object({
 export const userEmailSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
 });
+
+export const userWaterRateSchema = Joi.object({
+  waterRate: Joi.number().min(1).max(15000).required(),
+});
