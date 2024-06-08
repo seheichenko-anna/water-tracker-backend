@@ -7,7 +7,6 @@ import * as userServices from "../services/userServices.js";
 import ctrlWrapper from "../decorators/ctrlWrapper.js";
 
 import HttpError from "../helpers/HttpError.js";
-import resizeIMG from "../helpers/resizeIMJ.js";
 import cloudinary from "../helpers/cloudinary.js";
 
 const getCurrent = async (req, res) => {
@@ -29,13 +28,11 @@ const updateUser = async (req, res) => {
     if (!passwordCompare) {
       throw HttpError(401, "Password invalid");
     }
-  }
-  const hashPassword = await bcrypt.hash(newPassword, 10);
 
-  const result = await userServices.updateUser(
-    { _id },
-    { ...data, password: hashPassword }
-  );
+    data.password = await bcrypt.hash(newPassword, 10);
+  }
+
+  const result = await userServices.updateUser({ _id }, { ...data });
   if (!result) {
     throw HttpError(404);
   }
@@ -44,8 +41,6 @@ const updateUser = async (req, res) => {
 };
 
 const updateAvatar = async (req, res) => {
-  const { path: oldPath, filename } = req.file;
-  await resizeIMG(oldPath, lala);
   const { url: avatarURL } = await cloudinary.uploader.upload(req.file.path, {
     folder: "avatars",
     fetch_format: "auto",
