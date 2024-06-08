@@ -1,13 +1,14 @@
 import fs from "fs/promises";
-import path from "path";
+import bcrypt from "bcrypt";
+
+import * as authServices from "../services/authServices.js";
 
 import * as userServices from "../services/userServices.js";
 import ctrlWrapper from "../decorators/ctrlWrapper.js";
 
 import HttpError from "../helpers/HttpError.js";
 import resizeIMG from "../helpers/resizeIMJ.js";
-
-const avatarsPath = path.resolve("public", "avatars");
+import cloudinary from "../helpers/cloudinary.js";
 
 const getCurrent = async (req, res) => {
   const { email } = req.user;
@@ -16,9 +17,25 @@ const getCurrent = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { _id } = req.user;
+  const { _id, password: oldPassword } = req.user;
   const data = req.body;
-  const result = await userServices.updateUser({ _id }, { ...data });
+  const { newPassword, password } = req.body;
+
+  if (password) {
+    const passwordCompare = await authServices.comparePassword(
+      password,
+      oldPassword
+    );
+    if (!passwordCompare) {
+      throw HttpError(401, "Password invalid");
+    }
+  }
+  const hashPassword = await bcrypt.hash(newPassword, 10);
+
+  const result = await userServices.updateUser(
+    { _id },
+    { ...data, password: hashPassword }
+  );
   if (!result) {
     throw HttpError(404);
   }
@@ -28,18 +45,22 @@ const updateUser = async (req, res) => {
 
 const updateAvatar = async (req, res) => {
   const { path: oldPath, filename } = req.file;
-  const newPath = path.join(avatarsPath, filename);
+  await resizeIMG(oldPath, lala);
+  const { url: avatarURL } = await cloudinary.uploader.upload(req.file.path, {
+    folder: "avatars",
+    fetch_format: "auto",
+    quality: "auto",
+    width: 250,
+  });
+  await fs.unlink(req.file.path);
 
-  await resizeIMG(oldPath, newPath);
-  await fs.rename(oldPath, newPath);
-  const avatarURL = path.join("avatars", filename);
   const { _id } = req.user;
   const result = await userServices.updateAvatar({ _id }, { avatarURL });
   if (!result) {
     throw HttpError(404);
   }
 
-  res.json({ avatarURL });
+  res.json(result);
 };
 
 export default {
