@@ -53,7 +53,7 @@ const signin = async (req, res) => {
 
 const signout = async (req, res) => {
   const { _id } = req.user;
-  await authServices.updateUser({ _id }, { token: "" });
+  await userServices.updateUser({ _id }, { token: "" });
 
   res.json({ message: "Signout success" });
 };
