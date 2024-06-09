@@ -9,7 +9,6 @@ import swaggerDocument from "./swagger.json" assert { type: "json" };
 import waterRouter from "./routes/waterRouter.js";
 import userRouter from "./routes/userRouter.js";
 import authRouter from "./routes/authRouter.js";
-import waterRateRouter from "./routes/userRouter.js";
 
 const { DB_HOST, PORT = 3000 } = process.env;
 
@@ -24,7 +23,7 @@ app.use("/api/water", waterRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use("/api/waterrate", waterRateRouter);
+app.use("/api/waterrate", userRouter);
 
 app.use((_, res) => {
   res.status(404).json({ message: "Route not found" });

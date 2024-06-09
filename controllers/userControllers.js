@@ -7,7 +7,6 @@ import ctrlWrapper from "../decorators/ctrlWrapper.js";
 import HttpError from "../helpers/HttpError.js";
 import resizeIMG from "../helpers/resizeIMJ.js";
 
-import User from "../models/User.js";
 
 const avatarsPath = path.resolve("public", "avatars");
 
@@ -48,7 +47,7 @@ const updateWaterRate = async (req, res) => {
   const { waterRate } = req.body;
   const { _id } = req.user;
 
-  const updatedWaterRate = await User.findByIdAndUpdate(_id, {
+  const updatedWaterRate = await userServices.updateUser(_id, {
     waterRate: waterRate,
   });
 

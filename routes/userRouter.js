@@ -7,7 +7,6 @@ import authenticate from "../middlewares/authenticate.js";
 import upload from "../middlewares/upload.js";
 import { userUpdateSchema } from "../schemas/authSchemas.js";
 import { userWaterRateSchema } from "../schemas/authSchemas.js";
-import waterRateControlles from "../controllers/userControllers.js";
 
 
 const userRouter = express.Router();
@@ -30,12 +29,9 @@ userRouter.patch(
 );
 
 
-const waterRateRouter = express.Router();
 
-waterRateRouter.use(authenticate);
-
-waterRateRouter.patch(
-  "/",
+userRouter.patch(
+  "/waterRate",
   isEmptyBody,
   validateBody(userWaterRateSchema),
   waterRateControlles.updateWaterRate
@@ -43,5 +39,5 @@ waterRateRouter.patch(
 
 export default {
   userRouter,
-  waterRateRouter
+  
 };
