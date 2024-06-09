@@ -58,8 +58,22 @@ const updateAvatar = async (req, res) => {
   res.json(result);
 };
 
+const updateWaterRate = async (req, res) => {
+  const { waterRate } = req.body;
+  const { _id } = req.user;
+
+  if (waterRate > 15000) {
+    throw HttpError(400, "Water rate cannot exceed 15000 ml");
+  }
+
+  const updatedUser = await userServices.updateUser({ _id }, { waterRate });
+
+  res.status(200).json({ waterRate: updatedUser.waterRate });
+};
+
 export default {
   getCurrent: ctrlWrapper(getCurrent),
   updateUser: ctrlWrapper(updateUser),
   updateAvatar: ctrlWrapper(updateAvatar),
+  updateWaterRate: ctrlWrapper(updateWaterRate),
 };
