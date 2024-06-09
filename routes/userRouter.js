@@ -34,7 +34,7 @@ userRouter.patch(
   "/waterRate",
   isEmptyBody,
   validateBody(userWaterRateSchema),
-  waterRateControlles.updateWaterRate
+  updateWaterRate
 );
 
 export default {
