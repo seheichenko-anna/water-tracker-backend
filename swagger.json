@@ -5,7 +5,11 @@
     "version": "1.0.0",
     "description": "API documentation for Water Tracker application"
   },
-  "servers": [{"url": "http://localhost:3000/api"}],
+  "servers": [
+    {
+      "url": "http://localhost:3000/api"
+    }
+  ],
   "tags": [
     {
       "name": "Auth",
@@ -186,263 +190,18 @@
                 }
               }
             }
-          },
-          "responses": {
-            "200": {
-              "description": "User settings updated successfully",
-              "content": {
-                "application/json": {
-                  "examples": {
-                    "response": {
-                      "value": {
-                        "id": "60d0fe4f5311236168a109ca",
-                        "email": "newemail@example.com"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/user/avatars": {
-        "patch": {
-          "summary": "Update user avatar",
-          "tags": ["User"],
-          "consumes": ["multipart/form-data"],
-          "produces": ["application/json"],
-          "requestBody": {
-            "required": true,
-            "content": {
-              "multipart/form-data": {
-                "schema": {
-                  "$ref": "#/components/schemas/UpdateAvatar"
-                },
-                "examples": {
-                  "avatar": {
-                    "value": {
-                      "avatarURL": "<file>"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "User avatar updated successfully",
-              "content": {
-                "application/json": {
-                  "examples": {
-                    "response": {
-                      "value": {
-                        "id": "60d0fe4f5311236168a109ca",
-                        "avatarURL": "http://localhost:3000/avatars/newavatar.jpg"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/water": {
-        "post": {
-          "summary": "Create consumed water record",
-          "tags": ["Water"],
-          "consumes": ["application/json"],
-          "produces": ["application/json"],
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreateConsumedWater"
-                },
-                "examples": {
-                  "water": {
-                    "value": {
-                      "amount": 500,
-                      "date": "2024-06-04T12:00:00Z"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "201": {
-              "description": "Consumed water record created successfully",
-              "content": {
-                "application/json": {
-                  "examples": {
-                    "response": {
-                      "value": {
-                        "id": "60d0fe4f5311236168a109cb",
-                        "amount": 500,
-                        "date": "2024-06-04T12:00:00Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/water/{id}": {
-        "patch": {
-          "summary": "Update consumed water record",
-          "tags": ["Water"],
-          "consumes": ["application/json"],
-          "produces": ["application/json"],
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UpdateConsumedWater"
-                },
-                "examples": {
-                  "water": {
-                    "value": {
-                      "amount": 600,
-                      "date": "2024-06-05T12:00:00Z"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Consumed water record updated successfully",
-              "content": {
-                "application/json": {
-                  "examples": {
-                    "response": {
-                      "value": {
-                        "id": "60d0fe4f5311236168a109cb",
-                        "amount": 600,
-                        "date": "2024-06-05T12:00:00Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
           }
         },
-        "delete": {
-          "summary": "Delete consumed water record",
-          "tags": ["Water"],
-          "produces": ["application/json"],
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Consumed water record deleted successfully",
-              "content": {
-                "application/json": {
-                  "examples": {
-                    "response": {
-                      "value": {
-                        "message": "Consumed water record deleted successfully"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/water/today": {
-        "get": {
-          "summary": "Get consumed water for today",
-          "tags": ["Water"],
-          "produces": ["application/json"],
-          "responses": {
-            "200": {
-              "description": "Consumed water records for today retrieved successfully",
-              "content": {
-                "application/json": {
-                  "examples": {
-                    "response": {
-                      "value": [
-                        {
-                          "id": "60d0fe4f5311236168a109cb",
-                          "amount": 500,
-                          "date": "2024-06-04T12:00:00Z"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/water/{year}/{month}": {
-        "get": {
-          "summary": "Get consumed water for a specific month",
-          "tags": ["Water"],
-          "produces": ["application/json"],
-          "parameters": [
-            {
-              "name": "year",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "example": 2024
-              }
-            },
-            {
-              "name": "month",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "example": 6
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Consumed water records for the month retrieved successfully",
-              "content": {
-                "application/json": {
-                  "examples": {
-                    "response": {
-                      "value": [
-                        {
-                          "id": "60d0fe4f5311236168a109cb",
-                          "amount": 500,
-                          "date": "2024-06-04T12:00:00Z"
-                        }
-                      ]
+        "responses": {
+          "200": {
+            "description": "User settings updated successfully",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "response": {
+                    "value": {
+                      "id": "60d0fe4f5311236168a109ca",
+                      "email": "newemail@example.com"
                     }
                   }
                 }
@@ -452,102 +211,288 @@
         }
       }
     },
-    "components": {
-      "schemas": {
-        "Register": {
-          "type": "object",
-          "properties": {
-            "username": {
-              "type": "string",
-              "example": "exampleuser"
-            },
-            "email": {
-              "type": "string",
-              "example": "user@example.com"
-            },
-            "password": {
-              "type": "string",
-              "example": "examplepassword"
-            },
-            "avatar": {
-              "type": "string",
-              "format": "binary"
-            }
-          },
-          "required": ["username", "email", "password"]
-        },
-        "Login": {
-          "type": "object",
-          "properties": {
-            "email": {
-              "type": "string",
-              "example": "user@example.com"
-            },
-            "password": {
-              "type": "string",
-              "example": "examplepassword"
-            }
-          },
-          "required": ["email", "password"]
-        },
-        "UpdateSettings": {
-          "type": "object",
-          "properties": {
-            "email": {
-              "type": "string",
-              "example": "newemail@example.com"
-            },
-            "password": {
-              "type": "string",
-              "example": "newpassword"
+    "/user/avatars": {
+      "patch": {
+        "summary": "Update user avatar",
+        "tags": ["User"],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAvatar"
+              },
+              "examples": {
+                "avatar": {
+                  "value": {
+                    "avatarURL": "<file>"
+                  }
+                }
+              }
             }
           }
         },
-        "UpdateAvatar": {
-          "type": "object",
-          "properties": {
-            "avatarURL": {
-              "type": "string",
-              "format": "binary"
+        "responses": {
+          "200": {
+            "description": "User avatar updated successfully",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "response": {
+                    "value": {
+                      "id": "60d0fe4f5311236168a109ca",
+                      "avatarURL": "http://localhost:3000/avatars/newavatar.jpg"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/waterRate": {
+      "patch": {
+        "summary": "Update user water rate",
+        "tags": ["User"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateWaterRate"
+              },
+              "examples": {
+                "waterRate": {
+                  "value": {
+                    "waterRate": 3000
+                  }
+                }
+              }
             }
           }
         },
-        "CreateConsumedWater": {
-          "type": "object",
-          "properties": {
-            "amount": {
+        "responses": {
+          "200": {
+            "description": "User water rate updated successfully",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "response": {
+                    "value": {
+                      "waterRate": 3000
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/water": {
+      "post": {
+        "summary": "Create consumed water record",
+        "tags": ["Water"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateConsumedWater"
+              },
+              "examples": {
+                "water": {
+                  "value": {
+                    "amount": 500,
+                    "date": "2024-06-04T12:00:00Z"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Consumed water record created successfully",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "response": {
+                    "value": {
+                      "id": "60d0fe4f5311236168a109cb",
+                      "amount": 500,
+                      "date": "2024-06-04T12:00:00Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/water/{id}": {
+      "patch": {
+        "summary": "Update consumed water record",
+        "tags": ["Water"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateConsumedWater"
+              },
+              "examples": {
+                "water": {
+                  "value": {
+                    "amount": 600
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Consumed water record updated successfully",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "response": {
+                    "value": {
+                      "id": "60d0fe4f5311236168a109cb",
+                      "amount": 600
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete consumed water record",
+        "tags": ["Water"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consumed water record deleted successfully",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "response": {
+                    "value": {
+                      "message": "Consumed water record deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+"/water/today": {
+      "get": {
+        "summary": "Get today's water consumption",
+        "tags": ["Water"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Today's water consumption retrieved successfully",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "response": {
+                    "value": {
+                      "totalAmount": 1500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/water/{year}/{month}": {
+      "get": {
+        "summary": "Get monthly water consumption",
+        "tags": ["Water"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "schema": {
               "type": "integer",
-              "example": 500
-            },
-            "date": {
-              "type": "string",
-              "format": "date-time",
-              "example": "2024-06-04T12:00:00Z"
+              "example": 2024
             }
           },
-          "required": ["amount", "date"]
-        },
-        "UpdateConsumedWater": {
-          "type": "object",
-          "properties": {
-            "amount": {
+          {
+            "name": "month",
+            "in": "path",
+            "required": true,
+            "schema": {
               "type": "integer",
-              "example": 600
-            },
-            "date": {
-              "type": "string",
-              "format": "date-time",
-              "example": "2024-06-05T12:00:00Z"
+              "example": 6
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Monthly water consumption retrieved successfully",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "response": {
+                    "value": {
+                      "totalAmount": 30000
+                    }
+                  }
+                }
+              }
             }
           }
         }
       }
     }
   },
-"components": {
+  "components": {
     "schemas": {
       "Register": {
         "type": "object",
+        "required": ["username", "email", "password", "avatar"],
         "properties": {
           "username": {
             "type": "string",
@@ -565,11 +510,11 @@
             "type": "string",
             "format": "binary"
           }
-        },
-        "required": ["username", "email", "password"]
+        }
       },
       "Login": {
         "type": "object",
+        "required": ["email", "password"],
         "properties": {
           "email": {
             "type": "string",
@@ -579,8 +524,7 @@
             "type": "string",
             "example": "examplepassword"
           }
-        },
-        "required": ["email", "password"]
+        }
       },
       "UpdateSettings": {
         "type": "object",
@@ -597,6 +541,7 @@
       },
       "UpdateAvatar": {
         "type": "object",
+        "required": ["avatarURL"],
         "properties": {
           "avatarURL": {
             "type": "string",
@@ -604,8 +549,19 @@
           }
         }
       },
+      "UpdateWaterRate": {
+        "type": "object",
+        "required": ["waterRate"],
+        "properties": {
+          "waterRate": {
+            "type": "integer",
+            "example": 3000
+          }
+        }
+      },
       "CreateConsumedWater": {
         "type": "object",
+        "required": ["amount", "date"],
         "properties": {
           "amount": {
             "type": "integer",
@@ -616,8 +572,7 @@
             "format": "date-time",
             "example": "2024-06-04T12:00:00Z"
           }
-        },
-        "required": ["amount", "date"]
+        }
       },
       "UpdateConsumedWater": {
         "type": "object",
@@ -625,15 +580,9 @@
           "amount": {
             "type": "integer",
             "example": 600
-          },
-          "date": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2024-06-05T12:00:00Z"
           }
         }
       }
     }
   }
 }
-
