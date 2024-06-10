@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000/api"
+      "url": "https://water-tracker-backend-oo69.onrender.com/api-docs/"
     }
   ],
   "tags": [
