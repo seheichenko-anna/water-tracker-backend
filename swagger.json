@@ -41,10 +41,8 @@
               "examples": {
                 "user": {
                   "value": {
-                    "username": "exampleuser",
                     "email": "user@example.com",
-                    "password": "examplepassword",
-                    "avatar": "<file>"
+                    "password": "examplepassword"
                   }
                 }
               }
@@ -61,8 +59,7 @@
                     "value": {
                       "id": "60d0fe4f5311236168a109ca",
                       "username": "exampleuser",
-                      "email": "user@example.com",
-                      "avatarURL": "http://localhost:3000/avatars/exampleuser.jpg"
+                      "email": "user@example.com"
                     }
                   }
                 }
@@ -123,6 +120,7 @@
       "post": {
         "summary": "Logout a user",
         "tags": ["Auth"],
+        "security": [{"Bearer": []}],
         "produces": ["application/json"],
         "responses": {
           "200": {
@@ -146,6 +144,7 @@
       "get": {
         "summary": "Get current user",
         "tags": ["User"],
+        "security": [{"Bearer": []}],
         "produces": ["application/json"],
         "responses": {
           "200": {
@@ -172,6 +171,7 @@
       "patch": {
         "summary": "Update user settings",
         "tags": ["User"],
+        "security": [{"Bearer": []}],
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "requestBody": {
@@ -185,7 +185,8 @@
                 "settings": {
                   "value": {
                     "email": "newemail@example.com",
-                    "password": "newpassword"
+                    "password": "oldpassword",
+                    "newPassword": "newpassword"
                   }
                 }
               }
@@ -215,6 +216,7 @@
       "patch": {
         "summary": "Update user avatar",
         "tags": ["User"],
+        "security": [{"Bearer": []}],
         "consumes": ["multipart/form-data"],
         "produces": ["application/json"],
         "requestBody": {
@@ -257,6 +259,7 @@
       "patch": {
         "summary": "Update user water rate",
         "tags": ["User"],
+        "security": [{"Bearer": []}],
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "requestBody": {
@@ -298,6 +301,7 @@
       "post": {
         "summary": "Create consumed water record",
         "tags": ["Water"],
+        "security": [{"Bearer": []}],
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "requestBody": {
@@ -342,6 +346,7 @@
       "patch": {
         "summary": "Update consumed water record",
         "tags": ["Water"],
+        "security": [{"Bearer": []}],
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "parameters": [
@@ -364,7 +369,8 @@
               "examples": {
                 "water": {
                   "value": {
-                    "amount": 600
+                    "amount": 600,
+                    "date": "2024-06-04T12:00:00Z"
                   }
                 }
               }
@@ -380,7 +386,8 @@
                   "response": {
                     "value": {
                       "id": "60d0fe4f5311236168a109cb",
-                      "amount": 600
+                      "amount": 600,
+                      "date": "2024-06-04T12:00:00Z"
                     }
                   }
                 }
@@ -392,6 +399,7 @@
       "delete": {
         "summary": "Delete consumed water record",
         "tags": ["Water"],
+        "security": [{"Bearer": []}],
         "produces": ["application/json"],
         "parameters": [
           {
@@ -421,10 +429,11 @@
         }
       }
     },
-"/water/today": {
+    "/water/today": {
       "get": {
         "summary": "Get today's water consumption",
         "tags": ["Water"],
+        "security": [{"Bearer": []}],
         "produces": ["application/json"],
         "responses": {
           "200": {
@@ -434,7 +443,8 @@
                 "examples": {
                   "response": {
                     "value": {
-                      "totalAmount": 1500
+                      "percent": 0,
+                      "result": []
                     }
                   }
                 }
@@ -448,6 +458,7 @@
       "get": {
         "summary": "Get monthly water consumption",
         "tags": ["Water"],
+        "security": [{"Bearer": []}],
         "produces": ["application/json"],
         "parameters": [
           {
@@ -476,9 +487,194 @@
               "application/json": {
                 "examples": {
                   "response": {
-                    "value": {
-                      "totalAmount": 30000
-                    }
+                    "value": [
+                      {
+                          "date": "1, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "2, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "3, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "4, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "5, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "6, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "7, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "8, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "9, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "10, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "11, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "12, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "13, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "14, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "15, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "16, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "17, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "18, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "19, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "20, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "21, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "22, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "23, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "24, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "25, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "26, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "27, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "28, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "29, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "30, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      },
+                      {
+                          "date": "31, {month}",
+                          "waterRate": "1.5 L",
+                          "percent": "0%",
+                          "consumptionCount": 0
+                      }
+                  ]
                   }
                 }
               }
@@ -492,12 +688,8 @@
     "schemas": {
       "Register": {
         "type": "object",
-        "required": ["username", "email", "password", "avatar"],
+        "required": [ "email", "password"],
         "properties": {
-          "username": {
-            "type": "string",
-            "example": "exampleuser"
-          },
           "email": {
             "type": "string",
             "example": "user@example.com"
@@ -505,10 +697,6 @@
           "password": {
             "type": "string",
             "example": "examplepassword"
-          },
-          "avatar": {
-            "type": "string",
-            "format": "binary"
           }
         }
       },
@@ -533,7 +721,11 @@
             "type": "string",
             "example": "newemail@example.com"
           },
-          "password": {
+          "password":{
+            "type": "string",
+            "example": "oldpassword"
+          },
+          "newPassword": {
             "type": "string",
             "example": "newpassword"
           }
@@ -583,6 +775,13 @@
           }
         }
       }
-    }
+    },
+    "securitySchemes": {
+        "Bearer": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
   }
 }
