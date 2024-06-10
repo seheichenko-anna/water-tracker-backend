@@ -62,8 +62,8 @@ const updateWaterRate = async (req, res) => {
   const { waterRate } = req.body;
   const { _id } = req.user;
 
-  if (waterRate > 15000) {
-    throw HttpError(400, "Water rate cannot exceed 15000 ml");
+  if (waterRate > 15) {
+    throw HttpError(400, "Water rate cannot exceed 15 l");
   }
 
   const updatedUser = await userServices.updateUser({ _id }, { waterRate });
