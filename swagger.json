@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://water-tracker-backend-oo69.onrender.com/api-docs/"
+      "url": "https://water-tracker-backend-oo69.onrender.com/api"
     }
   ],
   "tags": [
