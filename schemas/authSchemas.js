@@ -27,5 +27,5 @@ export const userEmailSchema = Joi.object({
 });
 
 export const userWaterRateSchema = Joi.object({
-  waterRate: Joi.number().max(15000).required(),
+  waterRate: Joi.number().max(15).required(),
 });
