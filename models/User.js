@@ -18,7 +18,7 @@ const userSchema = new Schema(
     gender: {
       type: String,
       required: [true, "Gender identity is required"],
-      default: "women",
+      default: "woman",
     },
     waterRate: {
       type: Number,
