@@ -14,8 +14,6 @@ const getCurrent = async (req, res) => {
   const user = await userServices.findUser({ email });
   const result = user.toObject();
   delete result.password;
-  delete result.token;
-
   res.json(result);
 };
 
