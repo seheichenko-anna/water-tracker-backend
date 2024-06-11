@@ -23,7 +23,10 @@ const signup = async (req, res) => {
     avatarURL,
   });
 
-  res.status(201).json(newUser);
+  const result = newUser.toObject();
+  delete result.password;
+
+  res.status(201).json(result);
 };
 
 const signin = async (req, res) => {
@@ -46,8 +49,9 @@ const signin = async (req, res) => {
   const payload = { id };
 
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
-  const result = await userServices.updateUser({ _id: id }, { token });
-
+  const signinUser = await userServices.updateUser({ _id: id }, { token });
+  const result = signinUser.toObject();
+  delete result.password;
   res.json(result);
 };
 

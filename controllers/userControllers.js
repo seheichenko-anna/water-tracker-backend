@@ -12,7 +12,11 @@ import cloudinary from "../helpers/cloudinary.js";
 const getCurrent = async (req, res) => {
   const { email } = req.user;
   const user = await userServices.findUser({ email });
-  res.json(user);
+  const result = user.toObject();
+  delete result.password;
+  delete result.token;
+
+  res.json(result);
 };
 
 const updateUser = async (req, res) => {
@@ -37,7 +41,11 @@ const updateUser = async (req, res) => {
     throw HttpError(404);
   }
 
-  res.json(result);
+  const updatedUser = result.toObject();
+  delete updatedUser.password;
+  delete updatedUser.token;
+
+  res.json(updatedUser);
 };
 
 const updateAvatar = async (req, res) => {
@@ -55,7 +63,11 @@ const updateAvatar = async (req, res) => {
     throw HttpError(404);
   }
 
-  res.json(result);
+  const updatedUser = result.toObject();
+  delete updatedUser.password;
+  delete updatedUser.token;
+
+  res.json(updatedUser);
 };
 
 const updateWaterRate = async (req, res) => {
