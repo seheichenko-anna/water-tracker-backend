@@ -455,31 +455,34 @@
       }
     },
     "/water/{year}/{month}": {
-      "get": {
-        "summary": "Get monthly water consumption",
-        "tags": ["Water"],
-        "security": [{"Bearer": []}],
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "year",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "example": 2024
-            }
-          },
-          {
-            "name": "month",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "example": 6
-            }
-          }
-        ],
+  "get": {
+    "summary": "Get water consumption for a specific year and month",
+    "tags": ["Water"],
+    "security": [{"Bearer": []}],
+    "produces": ["application/json"],
+    "parameters": [
+      {
+        "name": "year",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "example": 2024
+        },
+        "description": "Year for which to retrieve water consumption"
+      },
+      {
+        "name": "month",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "enum": ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"],
+          "example": "june"
+        },
+        "description": "Month for which to retrieve water consumption"
+      }
+    ],
         "responses": {
           "200": {
             "description": "Monthly water consumption retrieved successfully",
@@ -747,7 +750,10 @@
         "properties": {
           "waterRate": {
             "type": "integer",
-            "example": 3000
+            "description": "The new daily water consumption rate in milliliters",
+            "example": 3000,
+            "minimum": 100,
+            "maximum": 15000
           }
         }
       },
@@ -757,7 +763,10 @@
         "properties": {
           "amount": {
             "type": "integer",
-            "example": 500
+            "example": 500,
+            "description": "The rate of consumed water during day in milliliters",
+            "minimum": 1,
+            "maximum": 5000
           },
           "date": {
             "type": "string",
@@ -768,10 +777,19 @@
       },
       "UpdateConsumedWater": {
         "type": "object",
+        "required": ["amount", "date"],
         "properties": {
           "amount": {
             "type": "integer",
-            "example": 600
+            "example": 600,
+            "description": "Editing the rate of consumed water during day in milliliters",
+            "minimum": 1,
+            "maximum": 5000
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-06-04T12:00:00Z"
           }
         }
       }
